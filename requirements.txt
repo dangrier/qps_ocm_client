@@ -1,0 +1,4 @@
+blackboxprotobuf
+pydantic
+pydantic_extra_types
+requests

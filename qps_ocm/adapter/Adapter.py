@@ -1,25 +1,36 @@
 from datetime import datetime
-from typing import Dict
+
+from pydantic_extra_types.coordinate import Coordinate
 
 from ..model.Location import Location
+from ..model.LocationType import LocationType
 from ..model.Offence import Offence
 from ..model.OffenceCategory import OffenceCategory
 
 
 class Adapter:
     @staticmethod
-    def location_from_blobject(blobject) -> Location:
-        return Location(
-            code=int(blobject['13'][0]['3']),
-            type=blobject['13'][2]['1'],
-            name=blobject['13'][1]['1'],
-        )
-    
+    def to_locations(geobuf_features):
+        return {
+            feature["properties"]["objectid"]: Location(
+                code=feature["properties"]["objectid"],
+                type=LocationType(feature["properties"]["type"]),
+                name=feature["properties"]["label"],
+            )
+            for feature in geobuf_features
+        }
+
     @staticmethod
-    def offence_from_blobject(blobject) -> Offence:
-        return Offence(
-            start_time=datetime.fromtimestamp(int(blobject["13"][0]["3"])),
-            category=OffenceCategory(int(blobject["13"][1]["3"])),
-            location=int(blobject["13"][2]["3"]),
-            coordinate=None,
-        )
+    def to_offences(geobuf_features):
+        return [
+            Offence(
+                start_time=datetime.fromtimestamp(feature["properties"]["date"]),
+                category=OffenceCategory(feature["properties"]["o_code"]),
+                coordinate=Coordinate(
+                    latitude=feature["geometry"]["coordinates"][1],
+                    longitude=feature["geometry"]["coordinates"][0],
+                ),
+                location=feature["properties"]["l_code"],
+            )
+            for feature in geobuf_features
+        ]

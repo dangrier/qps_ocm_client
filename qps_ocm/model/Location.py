@@ -1,6 +1,9 @@
 from pydantic import BaseModel
 
+from .LocationType import LocationType
+
+
 class Location(BaseModel):
     code: int
-    type: str
+    type: LocationType
     name: str

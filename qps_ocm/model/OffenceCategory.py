@@ -1,5 +1,5 @@
-
 from enum import IntEnum
+
 
 class OffenceCategory(IntEnum):
     HOMICIDE = 10
@@ -15,10 +15,13 @@ class OffenceCategory(IntEnum):
     FRAUD = 360
     HANDLING_STOLEN_GOODS = 400
     DRUG_OFFENCES = 460
+    PROSTITUTION = 520
     LIQUOR = 610
+    GAMING_RACING_AND_BETTING = 620
     TRESPASSING_AND_VAGRANCY = 640
     WEAPONS_ACT_OFFENCES = 645
     GOOD_ORDER_OFFENCES = 650
+    STOCK_RELATED_OFFENCES = 710
     TRAFFIC_RELATED_OFFENCES = 740
     MISCELLANEOUS_OFFENCES = 790
 
@@ -35,15 +38,19 @@ class OffenceCategory(IntEnum):
             OffenceCategory.UNLAWFUL_USE_OF_MOTOR_VEHICLE: "Unlawful Use of Motor Vehicle",
             OffenceCategory.OTHER_THEFT: "Other Theft (excl. Unlawful Entry)",
             OffenceCategory.FRAUD: "Fraud",
+            OffenceCategory.HANDLING_STOLEN_GOODS: "Handling Stolen Goods",
             OffenceCategory.DRUG_OFFENCES: "Drug Offences",
+            OffenceCategory.PROSTITUTION: "Prostitution",
             OffenceCategory.LIQUOR: "Liquor (excl. Drunkenness)",
+            OffenceCategory.GAMING_RACING_AND_BETTING: "Gaming Racing & Betting Offences",
             OffenceCategory.TRESPASSING_AND_VAGRANCY: "Trespassing & Vagrancy",
             OffenceCategory.WEAPONS_ACT_OFFENCES: "Weapons Act Offences",
             OffenceCategory.GOOD_ORDER_OFFENCES: "Good Order Offences",
+            OffenceCategory.STOCK_RELATED_OFFENCES: "Stock Related Offences",
             OffenceCategory.TRAFFIC_RELATED_OFFENCES: "Traffic & Related Offences",
             OffenceCategory.MISCELLANEOUS_OFFENCES: "Miscellaneous Offences",
         }
-        return __offence_map.get(self)
-    
+        return __offence_map.get(self) or "Unknown"
+
     def __str__(self) -> str:
         return self.__repr__()
